@@ -26,7 +26,8 @@ class Neo4jManip():
         "foo": {
             "tag": value
             }
-        }'''
+        }
+        '''
         nodes = []
         for k, v in data_dict.items():
             node: Node = self.graph.nodes.match(Name = k).first()
@@ -40,23 +41,39 @@ class Neo4jManip():
                         relationship_type: str = "", 
                         leaf_type: str = "",
                         name_key: str = "Name") -> list:
-        raw_pairs = []
-        latents = set()
-        sql_info = {}
+        '''
+        RETURNS \n
+        {pairs} - [(A, B), (B, C), (A, C)] \n
+        {sql_info} - {'table_name': 'device_4_bubble_cleaned_data_bayes', 
+                     '气泡失效': {'type': 'target', 'sql_column': 'label'}, ... }
+        '''
+        ## Query for all nodes / relationships around target node
+        raw_pairs = []  # pairs in form of  (start_node) - [] -> (end_node)
+        latents = set() # set of latent nodes   # !! Latent feature removed. 
+                                                # Using latents will seriously slow down 
+                                                # operation speed
+        sql_info = {}   # information extraction for each nodes
+        
+        # Query from neo4j
         res = self.find_all_around(
             target_name = target_name, 
             relationship_type = relationship_type, 
             leaf_type = leaf_type)
+        # Relationships
         for relations in res["Relationship"]:
             relation = relations.relationships[0]
             pair = (
                 relation.start_node.get(name_key),
                 relation.end_node.get(name_key),
             )
+            # pairs with latents
             raw_pairs.append(pair)
             
+            ## START NODE
+            # If node is ontology, add to latents
             if relation.start_node.has_label("Ontology"):
                 latents.add(relation.start_node.get(name_key))
+            # If node is target, store its SQL field
             elif relation.start_node.has_label("Target"):
                 sql_info.update({"table_name": relation.start_node.get("SQLTable")})
                 sql_info.update({
@@ -65,6 +82,7 @@ class Neo4jManip():
                         "sql_column": relation.start_node.get("SQLField")
                     }
                 })
+            # If node is factor, stor its SQL field and its thresholds
             else:
                 sql_info.update({"table_name": relation.start_node.get("SQLTable")})
                 sql_info.update({
@@ -75,9 +93,12 @@ class Neo4jManip():
                         "lower": relation.start_node.get("LowerValue")
                     }
                 })
-                
+            
+            ## END NODE
+            # If node is ontology, add to latents
             if relation.end_node.has_label("Ontology"):
                 latents.add(relation.end_node.get(name_key))
+            # If node is target, store its SQL field
             elif relation.end_node.has_label("Target"):
                 sql_info.update({"table_name": relation.end_node.get("SQLTable")})
                 sql_info.update({
@@ -86,6 +107,7 @@ class Neo4jManip():
                         "sql_column": relation.end_node.get("SQLField")
                     }
                 })
+            # If node is factor, stor its SQL field and its thresholds
             else:
                 sql_info.update({"table_name": relation.end_node.get("SQLTable")})
                 sql_info.update({
@@ -97,12 +119,12 @@ class Neo4jManip():
                     }
                 })
                 
-        # remove latents
+        # remove latents, all nodes point to Ontology(latent) will 
+        # be redirected to the next target node
         latents_targets = defaultdict(list)
         for pair in raw_pairs:
             if pair[0] in latents:
                 latents_targets[pair[0]].append(pair[1])
-        
         pairs = []
         for pair in raw_pairs:
             if pair[0] in latents:
@@ -111,6 +133,21 @@ class Neo4jManip():
                 pairs.extend([(pair[0], x) for x in latents_targets[pair[1]]])
             else:
                 pairs.append(pair)
-            
-            
         return pairs, sql_info
+    
+    def add_node_type(self, key: str, new_type: str):
+        nodes: list[Node] = self.graph.nodes.match(Name = key).all()
+        new_nodes = []
+        for node in nodes:
+            node.add_label(new_type)
+            new_nodes.append(node)
+        subgraph = Subgraph(new_nodes)
+        self.graph.push(subgraph)
+        
+    def remove_node_type(self, key: str, del_type: str):
+        self.graph.query(
+            f'''
+            MATCH (n {{Name: '{key}'}})
+            REMOVE n:{del_type}
+            '''
+        )
