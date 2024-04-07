@@ -1,6 +1,0 @@
-.venv
-*.ipynb_checkpoints/
-*__pycache__/
-*.bif
-*.pyc
-mars/
