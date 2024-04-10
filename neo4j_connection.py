@@ -151,3 +151,11 @@ class Neo4jManip():
             REMOVE n:{del_type}
             '''
         )
+
+    def update_relationship(self, start_name: str, end_name: str, key: str, content):
+        self.graph.query(
+            f'''
+            MATCH (n) - [r] -> (m) WHERE n.Name = "{start_name}" and m.Name = "{end_name}"
+            SET r.{key} = "{content}"
+            '''
+        )
