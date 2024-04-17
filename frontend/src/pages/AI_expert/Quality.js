@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Select, Button, Row, Col, Input } from 'antd';
+import "./QualityFailurePage.css"
 
 const QualityFailurePage = () => {
   const [selectedOption, setSelectedOption] = useState('');

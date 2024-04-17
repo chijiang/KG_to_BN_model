@@ -101,7 +101,8 @@ def thresholds_define(neo4j_conn: Neo4jManip, mysql_conn: MySqlManip, targets: l
                 max_value = mysql_conn.fetch(f'''SELECT MAX({sql_field}) FROM {sql_table}''')[0][0][0]
                 phase_width = (float(max_value) - float(min_value)) / 3
                 lower_limit = float(min_value) + float(phase_width)
-                upper_limit = float(max_value) + 1
+                # upper_limit = float(max_value) + 1
+                upper_limit = lower_limit + float(phase_width)
             except Exception as e:
                 log.error(f"{e}")
                 continue

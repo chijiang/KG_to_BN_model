@@ -115,3 +115,6 @@
 2024-04-17 13:20:22.762 | INFO     | __main__:bayesian_net:114 - making prediction
 2024-04-17 13:21:13.560 | INFO     | __main__:bayesian_net:76 - start building
 2024-04-17 13:21:24.211 | INFO     | __main__:bayesian_net:114 - making prediction
+2024-04-17 13:29:16.838 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x00000202D22692D0>, "['气泡']": <models.bayes_net.BNCreator object at 0x00000202D2280BD0>, "['夹渣', '孔洞', '气孔', '气泡']": <models.bayes_net.BNCreator object at 0x00000202D2287290>}
+2024-04-17 13:29:39.158 | INFO     | __main__:bayesian_net:114 - making prediction
+2024-04-17 13:29:50.179 | INFO     | __main__:bayesian_net:76 - start building
