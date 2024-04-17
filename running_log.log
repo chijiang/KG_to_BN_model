@@ -1,0 +1,117 @@
+2024-04-16 18:50:37.803 | INFO     | __main__:<module>:1 - aaa
+2024-04-17 09:01:00.569 | INFO     | __main__:bayesian_net:57 - start building
+2024-04-17 09:01:26.900 | INFO     | __main__:bayesian_net:74 - calculating posterior prob
+2024-04-17 09:01:28.524 | INFO     | __main__:bayesian_net:81 - writing to gdb
+2024-04-17 09:01:28.902 | INFO     | __main__:bayesian_net:93 - making prediction
+2024-04-17 09:02:04.755 | INFO     | __main__:bayesian_net:74 - calculating posterior prob
+2024-04-17 09:02:06.377 | INFO     | __main__:bayesian_net:81 - writing to gdb
+2024-04-17 09:02:06.643 | INFO     | __main__:bayesian_net:93 - making prediction
+2024-04-17 09:02:26.120 | INFO     | __main__:bayesian_net:57 - start building
+2024-04-17 09:02:56.559 | INFO     | __main__:bayesian_net:74 - calculating posterior prob
+2024-04-17 09:03:03.319 | INFO     | __main__:bayesian_net:81 - writing to gdb
+2024-04-17 09:03:03.916 | INFO     | __main__:bayesian_net:93 - making prediction
+2024-04-17 09:05:16.245 | INFO     | __main__:bayesian_net:59 - start building
+2024-04-17 09:05:58.267 | INFO     | __main__:bayesian_net:76 - calculating posterior prob
+2024-04-17 09:06:04.637 | INFO     | __main__:bayesian_net:83 - writing to gdb
+2024-04-17 09:06:05.862 | INFO     | __main__:bayesian_net:95 - making prediction
+2024-04-17 09:07:08.903 | INFO     | __main__:bayesian_net:76 - calculating posterior prob
+2024-04-17 09:07:15.270 | INFO     | __main__:bayesian_net:83 - writing to gdb
+2024-04-17 09:07:16.437 | INFO     | __main__:bayesian_net:95 - making prediction
+2024-04-17 09:07:47.484 | INFO     | __main__:bayesian_net:59 - start building
+2024-04-17 09:08:16.406 | INFO     | __main__:bayesian_net:78 - calculating posterior prob
+2024-04-17 09:08:23.018 | INFO     | __main__:bayesian_net:85 - writing to gdb
+2024-04-17 09:08:23.392 | INFO     | __main__:bayesian_net:97 - making prediction
+2024-04-17 09:09:06.716 | INFO     | __main__:bayesian_net:78 - calculating posterior prob
+2024-04-17 09:09:13.234 | INFO     | __main__:bayesian_net:85 - writing to gdb
+2024-04-17 09:09:13.491 | INFO     | __main__:bayesian_net:97 - making prediction
+2024-04-17 09:21:15.045 | INFO     | __main__:bayesian_net:59 - start building
+2024-04-17 09:22:16.114 | INFO     | __main__:bayesian_net:59 - start building
+2024-04-17 09:26:55.436 | INFO     | __main__:bayesian_net:59 - start building
+2024-04-17 09:33:51.572 | INFO     | __main__:bayesian_net:59 - start building
+2024-04-17 09:37:01.842 | INFO     | __main__:bayesian_net:59 - start building
+2024-04-17 09:38:25.453 | INFO     | __main__:bayesian_net:59 - start building
+2024-04-17 09:49:37.007 | INFO     | __main__:bayesian_net:59 - start building
+2024-04-17 09:50:05.856 | INFO     | __main__:bayesian_net:82 - calculating posterior prob
+2024-04-17 09:50:11.833 | INFO     | __main__:bayesian_net:89 - writing to gdb
+2024-04-17 09:50:12.176 | INFO     | __main__:bayesian_net:101 - making prediction
+2024-04-17 09:50:41.385 | INFO     | __main__:bayesian_net:82 - calculating posterior prob
+2024-04-17 09:50:47.608 | INFO     | __main__:bayesian_net:89 - writing to gdb
+2024-04-17 09:50:47.871 | INFO     | __main__:bayesian_net:101 - making prediction
+2024-04-17 09:50:55.453 | INFO     | __main__:bayesian_net:82 - calculating posterior prob
+2024-04-17 09:51:01.846 | INFO     | __main__:bayesian_net:89 - writing to gdb
+2024-04-17 09:51:02.107 | INFO     | __main__:bayesian_net:101 - making prediction
+2024-04-17 09:51:26.576 | INFO     | __main__:bayesian_net:82 - calculating posterior prob
+2024-04-17 10:06:07.400 | ERROR    | __main__:lifespan:31 - model base loading error: [Errno 2] No such file or directory: 'model_base.pickle'
+2024-04-17 10:10:30.390 | ERROR    | __main__:lifespan:32 - model base loading error: [Errno 2] No such file or directory: 'model_base.pickle'
+2024-04-17 10:11:04.610 | ERROR    | __main__:lifespan:32 - model base loading error: [Errno 2] No such file or directory: 'model_base.pickle'
+2024-04-17 10:12:57.070 | ERROR    | __main__:lifespan:32 - model base loading error: Ran out of input
+2024-04-17 10:13:19.023 | INFO     | __main__:lifespan:30 - model base loaded: {}
+2024-04-17 10:13:26.598 | INFO     | __main__:bayesian_net:78 - start building
+2024-04-17 10:13:55.972 | INFO     | __main__:bayesian_net:101 - calculating posterior prob
+2024-04-17 10:13:55.973 | INFO     | __main__:bayesian_net:107 - writing to gdb
+2024-04-17 10:14:56.096 | INFO     | __main__:lifespan:30 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000001EA572D18D0>}
+2024-04-17 10:15:02.479 | INFO     | __main__:bayesian_net:99 - calculating posterior prob
+2024-04-17 10:15:02.479 | INFO     | __main__:bayesian_net:117 - making prediction
+2024-04-17 10:35:09.208 | INFO     | __main__:lifespan:30 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x00000191F2B51E90>}
+2024-04-17 10:44:48.035 | INFO     | __main__:bayesian_net:100 - calculating posterior prob
+2024-04-17 10:44:48.036 | INFO     | __main__:bayesian_net:118 - making prediction
+2024-04-17 12:23:06.407 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x00000240FFF877D0>}
+2024-04-17 12:23:17.791 | INFO     | __main__:bayesian_net:114 - making prediction
+2024-04-17 12:28:46.558 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 12:32:30.657 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000001B2D2587C50>}
+2024-04-17 12:32:45.359 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 12:37:11.150 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x0000023B011B7B90>}
+2024-04-17 12:37:28.243 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 12:42:06.054 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 12:44:58.544 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000001708FF59410>}
+2024-04-17 12:45:01.265 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 12:50:27.885 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x00000248B9C18ED0>}
+2024-04-17 12:51:25.646 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 13:11:27.742 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000001B34694D590>}
+2024-04-17 13:11:49.807 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:49.900 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:49.990 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.042 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.096 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.186 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.276 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.346 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.419 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.519 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.565 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.633 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.742 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.807 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.867 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:50.970 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.058 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.128 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.211 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.284 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.366 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.457 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.522 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.580 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.658 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.717 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.801 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.881 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:51.976 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:52.065 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:52.144 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:52.205 | ERROR    | bayesian_net_serv:thresholds_define:106 - cannot access local variable 'upper_limit' where it is not associated with a value
+2024-04-17 13:11:55.057 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 13:17:19.002 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x0000018ED9EA6F90>}
+2024-04-17 13:17:28.770 | ERROR    | bayesian_net_serv:thresholds_define:106 - can only concatenate str (not "int") to str
+2024-04-17 13:17:29.078 | ERROR    | bayesian_net_serv:thresholds_define:106 - can only concatenate str (not "int") to str
+2024-04-17 13:17:29.228 | ERROR    | bayesian_net_serv:thresholds_define:106 - can only concatenate str (not "int") to str
+2024-04-17 13:17:30.088 | ERROR    | bayesian_net_serv:thresholds_define:106 - can only concatenate str (not "int") to str
+2024-04-17 13:17:30.403 | ERROR    | bayesian_net_serv:thresholds_define:106 - can only concatenate str (not "int") to str
+2024-04-17 13:17:30.582 | ERROR    | bayesian_net_serv:thresholds_define:106 - can only concatenate str (not "int") to str
+2024-04-17 13:17:53.244 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000001FC14889010>}
+2024-04-17 13:18:03.541 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 13:18:12.671 | INFO     | __main__:bayesian_net:114 - making prediction
+2024-04-17 13:20:13.696 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 13:20:22.762 | INFO     | __main__:bayesian_net:114 - making prediction
+2024-04-17 13:21:13.560 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-17 13:21:24.211 | INFO     | __main__:bayesian_net:114 - making prediction

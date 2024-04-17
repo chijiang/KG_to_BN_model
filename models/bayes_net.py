@@ -1,7 +1,5 @@
 from collections import defaultdict
 import pgmpy.models as pgm
-import pgmpy.factors.discrete as pgdisc
-import numpy as np
 import pandas as pd
 
 
@@ -28,6 +26,8 @@ class BNCreator(pgm.BayesianNetwork):
                             else "medium"
                         )
                     )
+                    if classified_value not in self.states[column]:
+                        classified_value = self.states[column][0]
                     evid[column] = {1: classified_value}
                 else:
                     evid[column] = {1: "BadBatch"} if value == 1 else {1: "FineBatch"}
@@ -43,17 +43,32 @@ class BNCreator(pgm.BayesianNetwork):
             ans[col_name][col_proper] = (
                 pred.loc[:, col].to_numpy()[0] if pred.loc[:, col].to_numpy() else 0.
             )
-
         return ans
+    
+    def get_posterior_probabilities(self, targets: list[str]):
+        posterior_probabilities = {}
+        for target in targets:
+            target_columns = [f"{target}_" + x for x in self.states[target]]
+            for key, value in self.states.items():
+                if key in targets:
+                    continue
+                posterior_probability = self.predict_probability(pd.DataFrame.from_dict({key: value}))[target_columns]
+                posterior_probabilities[(key, target)] = {value[i] : posterior_probability.iloc[i].to_dict() for i in range(len(value))}
+        return posterior_probabilities
 
-    def update_cpd(self, tag_name, values: dict):
-        cpd = pgdisc.TabularCPD(
-            tag_name,
-            len(values),
-            np.array(list(values.values())).reshape(-1, 1),
-            state_names={tag_name: list(values.keys())},
-        )
-        self.model.add_cpds(cpd)
+    def update_single_cpd(self, variable: str, values: list[float]):
+        if sum(values) != 1:
+            print("Error: total probability not equal to 1")
+            return
+        
+        for cpd in self.get_cpds():
+            if cpd.variable == variable:
+                new_cpd = cpd
+                for i in range (new_cpd.values.shape[0]):
+                    if i < len(values):
+                        new_cpd.values[i,:] = values[i]
+                self.add_cpds(new_cpd)
+                break
 
     def save_model(self, name: str):
-        self.model.save(f"./model_archive/{name}.bif", "bif")
+        self.save(f"./model_archive/{name}.bif", "bif")

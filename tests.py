@@ -1,81 +1,36 @@
 from mysql_connection import MySqlManip
 from neo4j_connection import Neo4jManip
-import pandas as pd
 
-conn = MySqlManip(
+
+mysql_conn = MySqlManip(
     user='root', host='10.60.5.99', port=3306, password='Boway@123', database='IOT'
 )
-
-conn.create_params_table()
-# conn.make_model_table(
-#     table_name = "ml_data_test",
-#     param_columns=["aaa", "bbb"],
-#     target_colums=["cc", "dd"]
-# )
-
-data = conn.load_data_to_dataframe('device_4_bubble_cleaned_data_bayes')
-data.dropna()
-selected_labels = ["cool_strength_total_mean_3min", "temp_3m_jiaozhu", "label"]
-data = data[selected_labels]
-
-length = len(data)
-cool_strength_upper_threshold = sorted(data["cool_strength_total_mean_3min"].tolist())[int(length * 4 / 5)]
-cool_strength_lower_threshold = sorted(data["cool_strength_total_mean_3min"].tolist())[int(length * 1 / 5)]
-temp_upper_threshold = sorted(data["temp_3m_jiaozhu"].tolist())[int(length * 5 / 6)]
-temp_lower_threshold = sorted(data["temp_3m_jiaozhu"].tolist())[int(length * 1 / 5)]
-
-data["cool_strength_total_mean_3min"] = pd.cut(
-    data["cool_strength_total_mean_3min"],
-    [-float('inf'), cool_strength_lower_threshold, cool_strength_upper_threshold, float('inf')],
-    labels=["IncompleteCooled","SolidCooled","OverCooled"])
-
-data["temp_3m_jiaozhu"] = pd.cut(
-    data["temp_3m_jiaozhu"],
-    [-float('inf'), temp_lower_threshold, temp_upper_threshold, float('inf')],
-    labels=["UnderHeated","WellHeated","OverHeated"])
-
-data["label"] = pd.cut(
-    data["label"],
-    2,
-    labels=["FineBatch","BadBatch"])
-
-from models.bayes_net import BNCreator
-bn = BNCreator(["cool_strength_total_mean_3min", "temp_3m_jiaozhu"], 'label')
-
-bn.update_cpd(
-    "temp_3m_jiaozhu",
-    {
-        "UnderHeated": 0.15,
-        "WellHeated": 0.79,
-        "OverHeated": 0.06
-    }
+neo4j_conn = Neo4jManip(
+    uri = "bolt://10.60.5.99:7687",
+    user = "neo4j",
+    password = "Boway123"
 )
 
-bn.update_cpd(
-    "cool_strength_total_mean_3min",
-    {
-        "IncompleteCooled": 0.15,
-        "SolidCooled": 0.79,
-        "OverCooled": 0.06
-    }
-)
+nodes = []
+for record in list(neo4j_conn.query(
+    f'''MATCH (n) WHERE n.SQLField <> "" and n.SQLTable <> " " return n'''
+)):
+    node = record["n"]
+    sql_table = node.get("SQLTable")
+    sql_field = node.get("SQLField")
+    # MIN MAX
+    try:
+        min_value = mysql_conn.fetch(f'''SELECT MIN({sql_field}) FROM {sql_table}''')[0][0][0]
+        max_value = mysql_conn.fetch(f'''SELECT MAX({sql_field}) FROM {sql_table}''')[0][0][0]
+        phase_width = (float(max_value) - float(min_value)) / 3
+        lower_limit = float(min_value) + float(phase_width)
+        upper_limit = lower_limit + phase_width
+    except Exception as e:
+        print(e)
+        continue
+    # Write to NEO4J
+    node.update({"UpperValue": upper_limit, "LowerValue": lower_limit})
+    nodes.append(node)
 
-bn.update_cpd(
-    "label",
-    {
-        "FineBatch": 0.02,
-        "BadBatch": 0.98,
-    }
-)
+neo4j_conn.push_node_updates(nodes)
 
-bn.model.fit(data)
-
-bn.model.predict_probability(data[["cool_strength_total_mean_3min", "label"]].loc[[10000]])
-
-# g = Neo4jManip(uri = "bolt://10.60.5.99:7687", user = "neo4j", password = "Boway123")
-# path = g.find_all_around(target_name="气泡缺陷")
-
-# dict(g.find_all_around(target_name="气泡缺陷").loc[1, ]['n'])
-
-# g.update_node("气泡缺陷", "SQLField", "bubble__")
-# g.graph.nodes.match(Name="气泡缺陷").all()

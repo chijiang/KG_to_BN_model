@@ -83,11 +83,11 @@ class MySqlManip():
         `{target_ids}` varchar(255) NULL,
         PRIMARY KEY (`ID` DESC)
         );'''
-        
         self.insert(query)
         
-    def load_data_to_dataframe(self, table_name: str):
-        data, column_names = self.fetch(f'''SELECT * FROM {table_name}''')
+    def load_data_to_dataframe(self, table_name: str, columns: list[str] = []):
+        query_columns = "*" if not columns else "`" + "`, `".join(columns) + "`"
+        data, column_names = self.fetch(f'''SELECT {query_columns} FROM {table_name}''')
         dataframe = pd.DataFrame([list(x) for x in data], columns = column_names)
         return dataframe
         

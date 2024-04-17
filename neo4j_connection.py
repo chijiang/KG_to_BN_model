@@ -1,18 +1,17 @@
 from collections import defaultdict
 from py2neo import Graph, Subgraph, Node
-import pandas as pd
 
 
 class Neo4jManip():
     def __init__(self, uri: str = "http://localhost:7474", user:str = "", password:str = "") -> None:
         self.graph = Graph(uri, auth=(user, password))
 
-    def find_all_around(self, target_name: str = "", relationship_type: str = "", leaf_type: str = ""):
+    def find_all_around(self, targets: list[str] = [], relationship_type: str = "", leaf_type: str = ""):
         relationship_type = f":{relationship_type}" if relationship_type else "*"
         leaf_type = f":{leaf_type}" if leaf_type else leaf_type
 
         cypher_head = f'''MATCH r = (m{leaf_type}) - [{relationship_type}] -> (n) '''
-        cypher_condition = f'''WHERE n.Name = '{target_name}' ''' if target_name else ""
+        cypher_condition = f'''WHERE n.Name in ["{'","'.join(targets)}"] ''' if targets else ""
         cypher_return = f'''RETURN r as Relationship, m as Roots, n as Leaves'''
         return self.graph.query(cypher_head + cypher_condition + cypher_return).to_data_frame()
 
@@ -37,7 +36,7 @@ class Neo4jManip():
         self.graph.push(sub_graph)
         
     def read_bayesian_graph(self, 
-                        target_name: str = "", 
+                        targets: list[str] = [],
                         relationship_type: str = "", 
                         leaf_type: str = "",
                         name_key: str = "Name") -> list:
@@ -56,7 +55,7 @@ class Neo4jManip():
         
         # Query from neo4j
         res = self.find_all_around(
-            target_name = target_name, 
+            targets = targets, 
             relationship_type = relationship_type, 
             leaf_type = leaf_type)
         # Relationships
@@ -74,7 +73,7 @@ class Neo4jManip():
             if relation.start_node.has_label("Ontology"):
                 latents.add(relation.start_node.get(name_key))
             # If node is target, store its SQL field
-            elif relation.start_node.has_label("Target"):
+            elif relation.start_node.get("Name") in targets:
                 sql_info.update({"table_name": relation.start_node.get("SQLTable")})
                 sql_info.update({
                     relation.start_node.get(name_key): {
@@ -99,7 +98,7 @@ class Neo4jManip():
             if relation.end_node.has_label("Ontology"):
                 latents.add(relation.end_node.get(name_key))
             # If node is target, store its SQL field
-            elif relation.end_node.has_label("Target"):
+            elif relation.end_node.get("Name") in targets:
                 sql_info.update({"table_name": relation.end_node.get("SQLTable")})
                 sql_info.update({
                     relation.end_node.get(name_key): {
@@ -145,7 +144,7 @@ class Neo4jManip():
         self.graph.push(subgraph)
         
     def remove_node_type(self, key: str, del_type: str):
-        self.graph.query(
+        self.graph.run(
             f'''
             MATCH (n {{Name: '{key}'}})
             REMOVE n:{del_type}
@@ -153,9 +152,19 @@ class Neo4jManip():
         )
 
     def update_relationship(self, start_name: str, end_name: str, key: str, content):
-        self.graph.query(
+        self.graph.run(
             f'''
             MATCH (n) - [r] -> (m) WHERE n.Name = "{start_name}" and m.Name = "{end_name}"
             SET r.{key} = "{content}"
             '''
         )
+
+    def match_nodes(self, *args, **kwargs):
+        return self.graph.nodes.match(*args, **kwargs)
+    
+    def query(self, cypher, parameters = None, timeout = None):
+        return self.graph.query(cypher, parameters, timeout)
+    
+    def push_node_updates(self, nodes: list[Node]):
+        sub = Subgraph(nodes)
+        self.graph.push(sub)
