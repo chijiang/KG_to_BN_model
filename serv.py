@@ -81,9 +81,12 @@ async def bayesian_net(
         network_graph, sql_info = neo4j_conn.read_bayesian_graph(
             targets = req.targets, 
             relationship_type = "影响")
-        readable_sql_columns = [col for col in sql_info 
-                                if col != "table_name" and sql_info[col].get("sql_column")]
-        valid_edges = [pair for pair in network_graph if pair[0] in readable_sql_columns and pair[1] in readable_sql_columns]
+        readable_columns = mysql_conn.load_data_to_dataframe(sql_info["table_name"]).dropna(how='all', axis=1).columns
+        valid_edges = [ pair
+            for pair in network_graph 
+                if pair[0] in readable_columns and 
+                   pair[1] in readable_columns
+            ]
         for pair in valid_edges:
             if pair not in list(bn.edges):
                 bn = create_bayesian_network(

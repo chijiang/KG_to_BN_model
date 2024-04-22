@@ -28,7 +28,7 @@ const App = () => {
         <div className="demo-logo-vertical" >
           <img src={require('./img/boway-logo.png')} alt="logo" className='logo-img' />
         </div>
-        <NavLeft />
+        {/* <NavLeft /> */}
       </Sider>
       <Layout>
         <Header

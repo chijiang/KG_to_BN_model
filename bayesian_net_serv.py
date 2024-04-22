@@ -26,7 +26,7 @@ def create_bayesian_network(
                             if col != "table_name" and 
                             sql_info[col].get("sql_column")]
     raw_data = mysql_conn.load_data_to_dataframe(sql_info["table_name"], readable_sql_columns)
-    raw_data = raw_data.fillna(0)
+    raw_data = raw_data.dropna(how='all', axis=1)
     readable_columns = [variable for variable in sql_info.keys() 
                          if variable != "table_name" and sql_info[variable]["sql_column"] in raw_data.columns]
     # raw_data = raw_data[[sql_info[variable]["sql_column"] for variable in readable_columns]]
@@ -39,16 +39,17 @@ def create_bayesian_network(
 
     # Forming data (discrete)
     raw_data = mysql_conn.load_data_to_dataframe(sql_info["table_name"])
-    raw_data = raw_data.dropna()
+    raw_data = raw_data.dropna(how='all', axis=1)
     series = []
 
     for variable in readable_columns:
         if variable == "table_name":
             continue
-        ser = raw_data[sql_info[variable]["sql_column"]]
+        ser: pd.Series = raw_data[sql_info[variable]["sql_column"]]
         ser.name = variable
         if sql_info[variable]["type"] == "target":
-            ser = pd.cut(ser,2,
+            print(ser.name)
+            ser = pd.cut(ser.astype('float'), 2, 
                 labels=["FineBatch", "BadBatch"])
         else:
             try:
@@ -97,8 +98,8 @@ def thresholds_define(neo4j_conn: Neo4jManip, mysql_conn: MySqlManip, targets: l
             sql_field = node.get("SQLField")
             # MIN MAX
             try:
-                min_value = mysql_conn.fetch(f'''SELECT MIN({sql_field}) FROM {sql_table}''')[0][0][0]
-                max_value = mysql_conn.fetch(f'''SELECT MAX({sql_field}) FROM {sql_table}''')[0][0][0]
+                min_value = mysql_conn.fetch(f'''SELECT MIN(`{sql_field}`) FROM `{sql_table}`''')[0][0][0]
+                max_value = mysql_conn.fetch(f'''SELECT MAX(`{sql_field}`) FROM `{sql_table}`''')[0][0][0]
                 phase_width = (float(max_value) - float(min_value)) / 3
                 lower_limit = float(min_value) + float(phase_width)
                 # upper_limit = float(max_value) + 1
