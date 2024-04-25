@@ -85,9 +85,14 @@ class MySqlManip():
         );'''
         self.insert(query)
         
-    def load_data_to_dataframe(self, table_name: str, columns: list[str] = []):
+    def load_data_to_dataframe(self, table_name: str, columns: list[str] = [], where: dict = {}):
         query_columns = "*" if not columns else "`" + "`, `".join(columns) + "`"
-        data, column_names = self.fetch(f'''SELECT {query_columns} FROM {table_name}''')
+        query = f'''SELECT {query_columns} FROM {table_name}'''
+        if where:
+            where_info = [f"`{name}`=\"{value}\"" for name, value in where.items()]
+            query += f''' WHERE {" AND ".join(where_info)}'''
+        data, column_names = self.fetch(query)
+
         dataframe = pd.DataFrame([list(x) for x in data], columns = column_names)
         return dataframe
         

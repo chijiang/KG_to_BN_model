@@ -12,6 +12,29 @@ class BNCreator(pgm.BayesianNetwork):
     def update_node_info(self, node_info: dict):
         self.node_info.update(node_info)
 
+    def predict_along_data_frame(self, df: pd.DataFrame):
+        df = df.dropna(axis=1)
+        feature_names = []
+        feature_series = []
+        for feature_name in self.node_info:
+            if feature_name != "table_name" and self.node_info[feature_name].get("type") != "target":
+                feature_field = self.node_info[feature_name].get("sql_column")
+                if feature_field in df.columns:
+                    feature_names.append(feature_name)
+                    
+                    ser = pd.cut(
+                        df[feature_field].astype('float'), 
+                        [-float("inf"), 
+                        float(self.node_info[feature_name]["lower"]), 
+                        float(self.node_info[feature_name]["upper"]),
+                        float("inf")],
+                        labels=["lower", "medium", "upper"])
+                    feature_series.append(ser)
+        filterred_data = pd.DataFrame(feature_series).T
+        filterred_data.columns = feature_names
+        filterred_data = filterred_data.dropna(axis=1)
+        return self.predict_probability(filterred_data)
+
     def make_inference(self, evidence: dict, target: str):
         evid = {}
         for column, value in evidence.items():

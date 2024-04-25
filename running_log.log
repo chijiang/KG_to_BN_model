@@ -136,3 +136,9 @@
 2024-04-19 11:40:55.615 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000001ABAA547210>, "['气泡']": <models.bayes_net.BNCreator object at 0x000001ABAA5C0C50>, "['夹渣', '孔洞', '气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000001ABAA5C5A10>}
 2024-04-19 11:41:26.676 | INFO     | __main__:bayesian_net:116 - making prediction
 2024-04-19 11:48:37.073 | INFO     | __main__:bayesian_net:116 - making prediction
+2024-04-22 16:12:12.834 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000002B054C3D950>, "['气泡']": <models.bayes_net.BNCreator object at 0x000002B054C5D290>, "['夹渣', '孔洞', '气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000002B054C6A050>}
+2024-04-22 16:12:50.483 | INFO     | __main__:bayesian_net:117 - making prediction
+2024-04-22 16:31:33.968 | ERROR    | __main__:lifespan:33 - model base loading error: [Errno 2] No such file or directory: 'model_base.pickle'
+2024-04-22 16:34:05.851 | INFO     | __main__:bayesian_net:76 - start building
+2024-04-22 16:34:34.468 | INFO     | __main__:bayesian_net:117 - making prediction
+2024-04-22 16:51:24.530 | INFO     | __main__:lifespan:31 - model base loaded: {"['气孔', '气泡']": <models.bayes_net.BNCreator object at 0x000001F9FFA6B410>}

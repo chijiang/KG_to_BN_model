@@ -125,6 +125,30 @@ async def bayesian_net(
             pass
     return ORJSONResponse(resp, 200)
 
+class DfPredictionReq(BaseModel):
+    table_name: str
+    target_list: list
+    lot_no: str
+
+@app.post("/make_prediction")
+async def make_prediction(
+    req: DfPredictionReq
+):
+    model = global_model_base.get(str(sorted(req.target_list)))
+    if not model:
+        return ORJSONResponse(
+            "Model doesn't exist",
+            400
+        )
+    data = mysql_conn.load_data_to_dataframe(
+        req.table_name,
+        where={"lot_no": req.lot_no}
+    )
+    ans = model.predict_along_data_frame(data)
+    return ORJSONResponse(
+        ans.to_dict(), 200
+    )
+
 @app.post("/set_threshold")
 async def set_threshold(
     req: BayesianNetReq

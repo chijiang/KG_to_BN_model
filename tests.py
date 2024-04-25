@@ -34,3 +34,20 @@ for record in list(neo4j_conn.query(
 
 neo4j_conn.push_node_updates(nodes)
 
+
+import pickle
+from mysql_connection import MySqlManip
+
+mysql_conn = MySqlManip(
+    user='root', host='10.60.5.99', port=3306, password='Boway@123', database='IOT'
+)
+model = pickle.load(open("model_base.pickle", "rb"))["['气孔', '气泡']"]
+
+data = mysql_conn.load_data_to_dataframe(
+    "`IOT`.`etl_final_data`",
+    where={"lot_no": "24240303500000"}
+)
+
+
+model.predict_along_data_frame(data)
+
